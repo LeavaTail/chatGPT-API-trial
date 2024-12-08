@@ -1,6 +1,13 @@
 import clr
  
+clr.AddReference('System')
+clr.AddReference('System.Collections')
 clr.AddReference('WCFClient')
+ 
+from System.Collections.Generic import Dictionary
+from System import String
+from System import Decimal
+
 import AssistantSeika
 
 from openai import OpenAI
@@ -38,9 +45,13 @@ def main():
         print(f"きりたん: {get_response}")
 
         client = AssistantSeika.WCFClient()
-        
+        vef = Dictionary[String, Decimal]()
+        vef['speed']=Decimal(1.22)
+        vef['volume']=Decimal(1.48)
+        vef['pitch']=Decimal(1.08)
+        vef['intonation']=Decimal(1.14)
         # 発声
-        pt = client.Talk(1707, get_response, None, None)
+        pt = client.Talk(1707, get_response, vef, None)
 
 if __name__ == "__main__":
     main()
