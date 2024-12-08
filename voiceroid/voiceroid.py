@@ -6,8 +6,8 @@ import AssistantSeika
 from openai import OpenAI
 
 def main():
-    print("ChatGPT + AssistantSeika Chatbot")
-    print("Type your message below. Type 'exit' to quit.\n")
+    print("東北きりたんチャットボット")
+    print("日本語でメッセージを入力してください。「exit」と入力すると終了します。\n")
 
     while True:
         user_input = input("You: ")
@@ -15,24 +15,32 @@ def main():
             print("Goodbye!")
             break
 
-        completion = OpenAI().chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
-                {
-                    "role": "user",
-                    "content": user_input
-                }
-            ]
-        )
+        try:
+            completion = OpenAI().chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "system", "content": (
+                        "あなたは東北地方出身のバーチャルキャラクター「東北きりたん」になりきります。"
+                        "明るく、親しみやすい口調で話してください。"
+                    )},
+                    {
+                        "role": "user",
+                        "content": user_input
+                    }
+                ]
+            )
+            get_response = completion.choices[0].message.content
 
-        get_response = completion.choices[0].message.content
-        print(get_response)
+        except Exception as e:
+            print(f"Error with OpenAI API: {e}")
+            get_response = "申し訳ないけど、応答を取得できませんでした。"
+
+        print(f"きりたん: {get_response}")
 
         client = AssistantSeika.WCFClient()
         
         # 発声
-        pt = client.Talk(5203, get_response, None, None)
+        pt = client.Talk(1707, get_response, None, None)
 
 if __name__ == "__main__":
     main()
