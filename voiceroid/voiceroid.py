@@ -1,15 +1,4 @@
-import clr
- 
-clr.AddReference('System')
-clr.AddReference('System.Collections')
-clr.AddReference('WCFClient')
- 
-from System.Collections.Generic import Dictionary
-from System import String
-from System import Decimal
-
-import AssistantSeika
-
+import subprocess
 from openai import OpenAI
 
 def get_gpt_response(prompt):
@@ -54,13 +43,9 @@ def main():
         gpt_response = get_gpt_response(user_input)
         
         print(f"きりたん: {gpt_response}")
-
-        client = AssistantSeika.WCFClient()
-        vef = Dictionary[String, Decimal]()
-        tuning_emotion(vef)
-
-        # 発声
-        pt = client.Talk(1707, gpt_response, vef, None)
+        subprocess.run([
+                    'seikasay2.exe', '-cid', str(1707), '-t', gpt_response
+                ])
 
 if __name__ == "__main__":
     main()
