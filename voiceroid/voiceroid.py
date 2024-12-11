@@ -23,12 +23,6 @@ def get_gpt_response(prompt):
         print(f"Error with OpenAI API: {e}")
         return "申し訳ないけど、きりたん困っちゃった…。もう一回試してみて！"
 
-def tuning_emotion(vef):
-    vef['speed']=Decimal(1.22)
-    vef['volume']=Decimal(1.48)
-    vef['pitch']=Decimal(1.08)
-    vef['intonation']=Decimal(1.14)    
-
 def main():
     print("東北きりたんチャットボット")
     print("日本語でメッセージを入力してください。「exit」と入力すると終了します。\n")
